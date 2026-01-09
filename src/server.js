@@ -25,11 +25,6 @@ app.use(
   }),
 );
 
-app.use((req, res, next) => {
-  console.log(`Time: ${new Date().toLocaleString()}`);
-  next();
-});
-
 app.get('/test-error', () => {
   throw new Error('Simulated server error');
 });
@@ -41,10 +36,7 @@ app.get('/notes', (req, res) => {
 app.get('/notes/:noteId', (req, res) => {
   res
     .status(200)
-    .json(
-      { id_param: req.params.noteId },
-      { message: `Retrived note with ID: ${req.params.noteId}` },
-    );
+    .json({ message: `Retrived note with ID: ${req.params.noteId}` });
 });
 
 app.use((req, res) => {
@@ -54,7 +46,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   const isProd = process.env.NODE_ENV === 'production';
   res.status(500).json({
-    message: isProd ? 'Internal server error' : err.message,
+    message: isProd ? 'Simulated server error' : err.message,
   });
 });
 
