@@ -6,7 +6,7 @@ import connectMongoDB from './db/connectMongoDB.js';
 import notesRoutes from './routes/notesRoutes.js';
 import logger from './middleware/logger.js';
 import errorHandler from './middleware/errorHandler.js';
-import notFoundhandler from './middleware/notFoundhandler.js';
+import notFoundHandler from './middleware/notFoundHandler.js';
 import helmet from 'helmet';
 
 const app = express();
@@ -19,7 +19,7 @@ app.use(helmet());
 
 app.use(notesRoutes);
 
-app.use(notFoundhandler);
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 await connectMongoDB();
