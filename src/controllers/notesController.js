@@ -49,3 +49,5 @@ const deleteNote = async (req, res) => {
 };
 
 export { getAllNotes, getNoteById, createNote, updateNote, deleteNote };
+
+// src/controllers/notesController.js
