@@ -1,54 +1,28 @@
 import express from 'express';
-import pino from 'pino-http';
 import cors from 'cors';
 import 'dotenv/config';
+import connectMongoDB from './db/connectMongoDB.js';
+
+import notesRoutes from './routes/notesRoutes.js';
+import logger from './middleware/logger.js';
+import errorHandler from './middleware/errorHandler.js';
+import notFoundhandler from './middleware/notFoundhandler.js';
+import helmet from 'helmet';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
+app.use(logger);
 app.use(express.json());
 app.use(cors());
-app.use(
-  pino({
-    level: 'info',
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        translateTime: 'HH: MM: ss',
-        ignore: 'pid,hostname',
-        messageFormat:
-          '{req.method} {req.url} {res.statusCode} - {responseTime}ms',
-        hideObject: true,
-      },
-    },
-  }),
-);
+app.use(helmet());
 
-app.get('/test-error', () => {
-  throw new Error('Simulated server error');
-});
+app.use(notesRoutes);
 
-app.get('/notes', (req, res) => {
-  res.status(200).json({ message: 'Retrieved all notes' });
-});
+app.use(notFoundhandler);
+app.use(errorHandler);
 
-app.get('/notes/:noteId', (req, res) => {
-  res
-    .status(200)
-    .json({ message: `Retrieved note with ID: ${req.params.noteId}` });
-});
-
-app.use((req, res) => {
-  res.status(404).json({ message: 'Route not found' });
-});
-
-app.use((err, req, res, next) => {
-  const isProd = process.env.NODE_ENV === 'production';
-  res.status(500).json({
-    message: isProd ? 'Simulated server error' : err.message,
-  });
-});
+await connectMongoDB();
 
 app.listen(PORT, () => {
   console.log(`Listen port: ${PORT}`);
