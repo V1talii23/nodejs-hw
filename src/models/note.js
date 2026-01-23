@@ -23,7 +23,7 @@ const noteSchema = new Schema(
 );
 
 noteSchema.index(
-  { title: 'text' },
+  { title: 'text', content: 'text' },
   {
     weights: { title: 10, content: 3 },
     default_language: 'english',
