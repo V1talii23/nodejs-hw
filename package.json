@@ -13,7 +13,9 @@
   "author": "Vitalii Savchuk <vetalsavhuk23@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "celebrate": "^15.0.3",
+    "cookie-parser": "^1.4.7",
     "cores": "^0.8.5",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

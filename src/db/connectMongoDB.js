@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Note from '../models/note.js';
+import { Note } from '../models/note.js';
 
 export default async function connectMongoDB() {
   try {
