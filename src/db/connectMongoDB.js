@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { Note } from '../models/note.js';
 
-export default async function connectMongoDB() {
+export async function connectMongoDB() {
   try {
     const url = process.env.MONGO_URL;
     await mongoose.connect(url);

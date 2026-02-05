@@ -39,7 +39,7 @@ export const loginUser = async (req, res) => {
     throw createHttpError(401, 'Invalid credentials');
   }
 
-  await Session.findOne({ userId: user._id });
+  await Session.findOneAndDelete({ userId: user._id });
 
   const newSession = await createSession(user._id);
 
@@ -50,7 +50,7 @@ export const loginUser = async (req, res) => {
 
 export const refreshUserSession = async (req, res) => {
   const session = await Session.findOne({
-    _id: req.cookies.sessionId,
+    sessionId: req.cookies.session._id,
     refreshToken: req.cookies.refreshToken,
   });
 
@@ -66,7 +66,7 @@ export const refreshUserSession = async (req, res) => {
   }
 
   await Session.deleteOne({
-    sessionId: req.cookies.sessionId,
+    sessionId: req.cookies.session._id,
     refreshToken: req.cookies.refreshToken,
   });
 

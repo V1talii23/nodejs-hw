@@ -1,6 +1,6 @@
 import { Joi, Segments } from 'celebrate';
 
-export const userRegisterSchema = {
+export const registeruserSchema = {
   [Segments.BODY]: Joi.object({
     username: Joi.string().trim(),
     email: Joi.string().email().required().trim(),
@@ -8,7 +8,7 @@ export const userRegisterSchema = {
   }),
 };
 
-export const userLoginSchema = {
+export const loginUserSchema = {
   [Segments.BODY]: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
