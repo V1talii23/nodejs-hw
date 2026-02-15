@@ -26,7 +26,7 @@ router.post('/auth/refresh', refreshUserSession);
 router.post('/auth/logout', logoutUser);
 
 router.post(
-  '/auth/request-reset-password',
+  '/auth/request-reset-email',
   celebrate(requestResetEmailSchema),
   requestResetEmail,
 );
